@@ -1,0 +1,8 @@
+// Azure Resource Graph: managed disks not attached to any VM.
+// These are billed in full while providing zero value - a classic FinOps waste signal.
+// Run: az graph query -q "$(cat queries/orphaned-managed-disks.kql)"
+Resources
+| where type =~ 'microsoft.compute/disks'
+| where properties.diskState =~ 'Unattached'
+| project name, resourceGroup, subscriptionId, location, sizeGB = properties.diskSizeGB, sku = sku.name, tags
+| order by sizeGB desc

@@ -1,0 +1,7 @@
+// Azure Resource Graph: public IP addresses not attached to any NIC, load balancer, or gateway.
+// Standard SKU public IPs bill hourly whether or not they're in use.
+// Run: az graph query -q "$(cat queries/unassociated-public-ips.kql)"
+Resources
+| where type =~ 'microsoft.network/publicipaddresses'
+| where isnull(properties.ipConfiguration)
+| project name, resourceGroup, subscriptionId, location, allocationMethod = properties.publicIPAllocationMethod, sku = sku.name, tags

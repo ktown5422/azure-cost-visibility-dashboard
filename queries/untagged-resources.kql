@@ -1,0 +1,7 @@
+// Azure Resource Graph: resources missing required cost-allocation tags.
+// Untagged resources can't be attributed to a team/cost center in Cost Analysis.
+// Run: az graph query -q "$(cat queries/untagged-resources.kql)"
+Resources
+| where tags !has 'CostCenter' or tags !has 'Environment'
+| project name, type, resourceGroup, subscriptionId, location, tags
+| order by resourceGroup asc, name asc
