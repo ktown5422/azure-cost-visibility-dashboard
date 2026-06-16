@@ -1,0 +1,100 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 1,
+      "content": {
+        "json": "## Azure Cost Visibility Dashboard\n\nThis workbook surfaces **governance and waste-detection signals** via Azure Resource Graph: untagged resources, orphaned disks, and unassociated public IPs. Pair it with **Cost Management > Cost analysis** (or the CSVs landing in the `cost-exports` storage container) for dollar trend reporting - see `docs/dashboard-design.md` for why the two are split.\n\nPick a subscription below, then review each section."
+      },
+      "name": "intro"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "b1f5a6d2-6b8e-4b8a-9b8a-subscription01",
+            "version": "KqlParameterItem/1.0",
+            "name": "Subscription",
+            "type": 6,
+            "isRequired": true,
+            "typeSettings": {}
+          }
+        ],
+        "style": "pills",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "name": "parameters"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "### Untagged resources\nResources missing `CostCenter` or `Environment` tags - can't be attributed to a team in Cost Analysis."
+      },
+      "name": "untagged-header"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "Resources\n| where tags !has 'CostCenter' or tags !has 'Environment'\n| project name, type, resourceGroup, location, tags\n| order by resourceGroup asc, name asc",
+        "size": 1,
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources",
+        "crossComponentResources": [
+          "{Subscription}"
+        ],
+        "visualization": "table"
+      },
+      "name": "untagged-resources"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "### Orphaned managed disks\nUnattached disks billed in full with zero value delivered."
+      },
+      "name": "disks-header"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "Resources\n| where type =~ 'microsoft.compute/disks'\n| where properties.diskState =~ 'Unattached'\n| project name, resourceGroup, location, sizeGB = properties.diskSizeGB, sku = sku.name\n| order by sizeGB desc",
+        "size": 1,
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources",
+        "crossComponentResources": [
+          "{Subscription}"
+        ],
+        "visualization": "table"
+      },
+      "name": "orphaned-disks"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "### Unassociated public IPs\nStandard SKU public IPs bill hourly whether or not anything is using them."
+      },
+      "name": "ips-header"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "Resources\n| where type =~ 'microsoft.network/publicipaddresses'\n| where isnull(properties.ipConfiguration)\n| project name, resourceGroup, location, allocationMethod = properties.publicIPAllocationMethod, sku = sku.name",
+        "size": 1,
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources",
+        "crossComponentResources": [
+          "{Subscription}"
+        ],
+        "visualization": "table"
+      },
+      "name": "unassociated-public-ips"
+    }
+  ],
+  "fallbackResourceIds": [],
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
