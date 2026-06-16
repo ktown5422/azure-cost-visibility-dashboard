@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "resourceGroupName": {
+      "value": "rg-cost-visibility-lab-iac"
+    },
+    "location": {
+      "value": "<your-region e.g. eastus>"
+    },
+    "alertEmail": {
+      "value": "<your-email@example.com>"
+    },
+    "budgetAmount": {
+      "value": 15
+    },
+    "exportStorageAccountName": {
+      "value": "<globally-unique-name-lowercase-no-dashes>"
+    }
+  }
+}
