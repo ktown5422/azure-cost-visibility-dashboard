@@ -194,15 +194,15 @@ Technical, operational, and business lessons learned while building the project.
 
 ### Logic App Workflow
 
-![Logic App Workflow](screenshots/05-logic-app-workflow.png)
+![Logic App Workflow](screenshots/06-logic-app-workflow.png)
 
 ### Workbook Dashboard
 
-![Workbook Dashboard](screenshots/08-workbook-dashboard.png)
+![Workbook Dashboard](screenshots/11-workbook-dashboard-overview.png)
 
 ### Email Notification
 
-![Email Alert](screenshots/10-email-alert.png)
+![Email Alert](screenshots/13-email-alert.png)
 
 ---
 
