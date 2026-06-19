@@ -1,10 +1,6 @@
 # Azure Cost Visibility Dashboard
 
-## Overview
-
-The Azure Cost Visibility Dashboard is a cloud operations project designed to help organizations monitor Azure spending, receive proactive budget alerts, investigate unexpected cost increases, and improve cost accountability through governance and resource tagging.
-
-This project demonstrates practical cloud engineering skills in Azure Cost Management, monitoring, automation, governance, operational documentation, and troubleshooting.
+A cloud engineering project that helps organizations monitor Azure spending, receive proactive budget alerts, investigate unexpected cost increases, and improve cost accountability through governance and automation.
 
 ---
 
@@ -16,9 +12,9 @@ Cloud costs can increase unexpectedly when resources are over-provisioned, left 
 
 ### Example Scenario
 
-A team expects a monthly Azure spend of $5,000.
+A team expects a monthly Azure spend of **$5,000**.
 
-By the end of the month, the actual spend reaches $30,000 due to:
+By the end of the month, the actual spend reaches **$30,000** due to:
 
 - Unused resources remaining deployed
 - Lack of budget monitoring
@@ -88,6 +84,87 @@ Additional Architecture Documentation:
 
 ---
 
+# 🚀 Follow Along Lab Guide
+
+Want to build this project yourself?
+
+This repository includes a complete step-by-step implementation guide that walks through every phase of the project, including Azure resource creation, budget configuration, monitoring, automation, dashboards, governance, and troubleshooting.
+
+## Start Here
+
+📖 **Lab Guide**
+
+👉 [View the Step-by-Step Lab Guide](docs/lab-guide.md)
+
+### What You'll Build
+
+- Resource Group
+- Resource Tagging Strategy
+- Storage Account
+- Azure Budgets
+- Azure Monitor Alerts
+- Action Groups
+- Logic Apps
+- Log Analytics Workspace
+- Azure Workbook Dashboard
+- Azure Resource Graph Queries
+- Cost Investigation Workflow
+
+### Skills You'll Learn
+
+- Azure Cost Management
+- Azure Governance
+- Azure Monitoring
+- Azure Automation
+- Azure Workbooks
+- Azure Resource Graph
+- Cloud Operations
+- Cost Optimization
+
+### Estimated Completion Time
+
+**2–4 Hours**
+
+### Skill Level
+
+**Beginner → Intermediate Cloud Engineer**
+
+---
+
+## Project Documentation
+
+### Problem and Solution
+
+Explains the business problem, root causes, solution design, and business value.
+
+📄 [Problem and Solution](docs/problem-solution.md)
+
+### Architecture Explanation
+
+Detailed explanation of the architecture and why each Azure service was selected.
+
+📄 [Architecture Explanation](architecture/architecture-explanation.md)
+
+### Cost Investigation Runbook
+
+Operational process used when a budget alert is triggered.
+
+📄 [Cost Investigation Runbook](docs/cost-investigation-runbook.md)
+
+### Troubleshooting Log
+
+Issues encountered and resolutions documented during implementation.
+
+📄 [Troubleshooting Log](docs/troubleshooting-log.md)
+
+### Lessons Learned
+
+Technical, operational, and business lessons learned while building the project.
+
+📄 [Lessons Learned](docs/lessons-learned.md)
+
+---
+
 ## Azure Services Used
 
 | Service | Purpose |
@@ -102,84 +179,6 @@ Additional Architecture Documentation:
 | Log Analytics Workspace | Monitoring foundation |
 | Azure Storage Account | Generate cost data and resource activity |
 | Resource Tags | Ownership and cost allocation |
-
----
-
-## Project Structure
-
-```text
-azure-cost-visibility-dashboard/
-│
-├── README.md
-│
-├── architecture/
-│   ├── architecture-diagram.png
-│   ├── architecture-diagram.drawio
-│   └── architecture-explanation.md
-│
-├── docs/
-│   ├── problem-solution.md
-│   ├── lab-guide.md
-│   ├── cost-investigation-runbook.md
-│   ├── troubleshooting-log.md
-│   └── lessons-learned.md
-│
-└── screenshots/
-```
-
----
-
-## Documentation
-
-### Problem and Solution
-
-Explains the business problem, root causes, solution design, and business value.
-
-Location:
-
-```text
-docs/problem-solution.md
-```
-
-### Lab Guide
-
-Step-by-step implementation guide for rebuilding the project.
-
-Location:
-
-```text
-docs/lab-guide.md
-```
-
-### Cost Investigation Runbook
-
-Operational process used when a budget alert is triggered.
-
-Location:
-
-```text
-docs/cost-investigation-runbook.md
-```
-
-### Troubleshooting Log
-
-Issues encountered and resolutions documented during implementation.
-
-Location:
-
-```text
-docs/troubleshooting-log.md
-```
-
-### Lessons Learned
-
-Technical, operational, and business lessons learned while building the project.
-
-Location:
-
-```text
-docs/lessons-learned.md
-```
 
 ---
 
@@ -235,6 +234,19 @@ docs/lessons-learned.md
 - Runbooks
 - Troubleshooting Guides
 - Operational Documentation
+
+---
+
+## Future Improvements
+
+Potential enhancements include:
+
+- Azure Policy tag enforcement
+- Power BI reporting integration
+- Automated cost anomaly detection
+- Multi-subscription reporting
+- FinOps dashboards
+- Azure Functions automation
 
 ---
 
