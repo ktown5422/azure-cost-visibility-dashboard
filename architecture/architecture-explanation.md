@@ -1,62 +1,68 @@
-# Azure Cost Visibility Dashboard Architecture Explanation
+# Architecture Explanation
 
 ## Overview
 
-The Azure Cost Visibility Dashboard was built to help organizations monitor cloud spending, receive proactive budget alerts, investigate unexpected cost increases, and improve cost accountability through governance and resource tagging.
+The Azure Cost Visibility Dashboard is a cloud operations solution designed to help organizations monitor cloud spending, receive proactive budget alerts, investigate unexpected cost increases, and optimize resource usage.
 
-The solution combines Azure Cost Management, Budgets, Azure Monitor, Action Groups, Logic Apps, Workbooks, Azure Resource Graph, and governance tags into a centralized cost visibility platform.
+The architecture combines Azure Cost Management, Budgets, Azure Monitor, Action Groups, Logic Apps, Workbooks, Azure Resource Graph, and governance tags to create an end-to-end cost monitoring and investigation workflow.
+
+The goal is to provide visibility into cloud spending before costs become a business problem.
 
 ---
 
 # Business Problem
 
-Organizations often struggle to answer questions such as:
+Organizations often struggle to understand why cloud costs increase.
 
-- Why did the Azure bill increase this month?
-- Which resource is generating the most cost?
-- Who owns a particular resource?
-- When should we be alerted about overspending?
-- How can we reduce cloud costs?
+Common challenges include:
 
-Without proper monitoring and governance, cloud costs can increase unexpectedly and become difficult to explain.
+- Lack of visibility into spending trends
+- Missing ownership information
+- No automated cost alerts
+- No documented investigation process
+- Difficulty explaining monthly cloud bills
+
+Without proactive monitoring and governance, cloud costs can grow unexpectedly and become difficult to control.
 
 ---
 
-# Solution Architecture
+# Solution Overview
 
-The solution follows four stages:
+The Azure Cost Visibility Dashboard solves this problem through four stages:
 
 1. Cost Monitoring
 2. Alerting and Notification
 3. Investigation and Visibility
 4. Cost Optimization
 
+The architecture allows stakeholders to detect cost issues early, investigate root causes, and implement corrective actions before spending exceeds budget expectations.
+
 ---
 
-# Stage 1: Cost Monitoring
+# Monitoring Layer
 
 ## Azure Cost Management
 
-Azure Cost Management is responsible for tracking cloud spending across the Azure subscription.
+Azure Cost Management continuously tracks cloud spending across the Azure subscription.
 
 Responsibilities:
 
-- Tracks Azure resource consumption
-- Provides spending trends
-- Generates cost analysis reports
-- Supports forecasting and budgeting
+- Monitor resource consumption
+- Track spending trends
+- Generate cost reports
+- Support cost forecasting
 
 Business Value:
 
-Provides visibility into where cloud spending occurs and helps identify cost trends before they become budget problems.
+Provides visibility into how Azure resources contribute to overall cloud spending.
 
 ---
 
 ## Azure Budget
 
-Azure Budgets define spending thresholds that trigger alerts when actual or forecasted spending exceeds expected levels.
+Azure Budgets define spending thresholds and evaluate both actual and forecasted costs.
 
-Configuration:
+Configured Thresholds:
 
 - 50% Actual Spend
 - 80% Actual Spend
@@ -65,195 +71,214 @@ Configuration:
 
 Business Value:
 
-Provides early warning when spending approaches budget limits.
+Provides early warning before cloud spending exceeds budget expectations.
 
 ---
 
-# Stage 2: Alerting and Notification
+# Alerting Layer
 
-## Azure Monitor Action Group
+## Azure Monitor Budget Alerts
 
-Action Groups determine who receives notifications when an alert is triggered.
+When a spending threshold is reached, Azure Monitor generates a budget alert.
 
-Responsibilities:
+The alert contains:
 
-- Receives budget alerts
-- Routes notifications
-- Triggers automated actions
+- Current spend
+- Forecasted spend
+- Budget threshold reached
+- Subscription information
 
 Business Value:
 
-Ensures the appropriate stakeholders are informed when spending thresholds are exceeded.
+Automates the detection of potential cost overruns.
+
+---
+
+## Azure Action Group
+
+Action Groups determine who should be notified when an alert occurs.
+
+Responsibilities:
+
+- Receive alert events
+- Route notifications
+- Trigger automated actions
+
+Business Value:
+
+Ensures that the appropriate stakeholders receive timely notifications.
 
 ---
 
 ## Azure Logic App
 
-The Logic App automates notification delivery.
+The Logic App automates the notification process.
 
 Workflow:
 
-Budget Alert → Action Group → Logic App → Email Notification
+Azure Budget → Action Group → Logic App → Email Notification
 
 Responsibilities:
 
-- Receives alert payload
-- Formats notification
-- Sends email to stakeholders
+- Receive alert payload
+- Format notification message
+- Send email to stakeholders
 
 Business Value:
 
-Reduces response time and eliminates manual monitoring requirements.
+Eliminates manual monitoring and reduces response time.
 
 ---
 
-# Stage 3: Investigation and Visibility
+# Investigation and Visibility Layer
 
 ## Azure Workbook Dashboard
 
-The Workbook serves as the primary dashboard used during investigations.
+The Workbook Dashboard acts as the primary investigation interface used by the Cloud Engineer.
 
 Dashboard Components:
 
 - Resource Inventory
-- Tagged Resource Inventory
+- Tagged Resources
 - Budget Configuration
 - Alert Workflow
 - Cost Investigation Runbook
-- Cost Optimization Recommendations
+- Optimization Recommendations
 
 Business Value:
 
-Provides a centralized location for understanding cloud spending and ownership.
+Provides a centralized location for cost investigations and operational visibility.
 
 ---
 
 ## Azure Resource Graph
 
-Azure Resource Graph is used to query Azure resources across the subscription.
+Azure Resource Graph allows the Cloud Engineer to query Azure resources across the environment.
 
 Example Use Cases:
 
-- Resource inventory
+- Resource inventory reporting
 - Tag validation
-- Governance reporting
-- Cost investigations
+- Governance audits
+- Ownership identification
 
 Business Value:
 
-Allows engineers to quickly locate resources and identify ownership information.
+Provides fast access to resource metadata and ownership information.
 
 ---
 
-## Log Analytics Workspace
+## Resource Tags
 
-Log Analytics provides a centralized location for collecting monitoring and diagnostic data.
+All resources are tagged using a governance strategy.
 
-Workspace:
+Tags include:
 
-- law-cost-visibility
-
-Business Value:
-
-Creates a foundation for future monitoring, observability, and incident response capabilities.
-
----
-
-# Stage 4: Governance and Cost Optimization
-
-## Resource Tagging Strategy
-
-All resources use the following governance tags:
-
-| Tag | Purpose |
-|------|----------|
-| Project | Identify business initiative |
-| Environment | Identify deployment environment |
-| Owner | Identify responsible engineer |
-| Department | Identify business unit |
-| CostCenter | Support financial reporting |
+- Project
+- Environment
+- Owner
+- Department
+- CostCenter
 
 Example:
 
-```text
-Project: CostVisibilityDashboard
-Environment: Lab
-Owner: Kevin
-Department: CloudOps
+Project: CostVisibilityDashboard  
+Environment: Lab  
+Owner: Kevin  
+Department: CloudOps  
 CostCenter: Training
-```
 
 Business Value:
 
-Provides accountability and enables cost allocation across teams and projects.
+Improves accountability and enables cost allocation across teams and projects.
 
 ---
 
-## Cost Investigation Process
+# Cost Optimization Layer
 
-When a budget alert is triggered:
+After the root cause of increased spending is identified, optimization activities begin.
 
-1. Review Cost Analysis
-2. Identify cost drivers
-3. Review Resource Inventory
-4. Validate ownership using tags
-5. Determine optimization opportunities
-6. Document findings
+Examples:
 
-Possible Optimization Actions:
-
-- Delete unused resources
-- Reduce storage costs
-- Apply lifecycle policies
+- Remove unused resources
+- Resize overprovisioned resources
+- Apply storage lifecycle policies
 - Improve tagging compliance
-- Create additional budgets
+- Create additional budget controls
 
 Business Value:
 
-Helps reduce cloud spending and improve operational efficiency.
+Reduces cloud waste and improves overall cost efficiency.
 
 ---
 
-# Azure Resources Used
+# Resource Foundation
+
+The solution is built on the following Azure resources:
 
 | Resource | Purpose |
-|-----------|----------|
+|-----------|-----------|
 | Resource Group | Organize project resources |
-| Storage Account | Generate cost data and demonstrate resource tracking |
-| Azure Cost Management | Monitor cloud spending |
+| Storage Account | Generate cost activity and resource tracking |
+| Azure Cost Management | Monitor spending |
 | Azure Budget | Define spending thresholds |
-| Azure Monitor Action Group | Route notifications |
-| Azure Logic App | Automate email alerts |
-| Azure Workbook | Dashboard and reporting |
-| Azure Resource Graph | Resource inventory and governance queries |
+| Azure Monitor | Generate alerts |
+| Azure Action Group | Route notifications |
+| Azure Logic App | Automate email delivery |
+| Azure Workbook | Investigation dashboard |
+| Azure Resource Graph | Resource inventory and governance |
 | Log Analytics Workspace | Monitoring foundation |
 
 ---
 
-# Architecture Benefits
+# End-to-End Workflow
 
-This architecture provides:
+1. Azure Cost Management tracks cloud spending.
 
-- Cost visibility
-- Budget monitoring
-- Automated alerting
-- Governance through tagging
-- Resource ownership tracking
-- Investigation workflows
-- Cost optimization recommendations
+2. Azure Budget evaluates actual and forecasted costs against configured thresholds.
 
-Together, these capabilities help organizations understand, explain, and control Azure cloud spending before costs become a business problem.
+3. When a threshold is reached, Azure Monitor generates a budget alert.
+
+4. The alert is routed through an Azure Action Group.
+
+5. The Action Group triggers an Azure Logic App.
+
+6. The Logic App sends an email notification to stakeholders.
+
+7. The Cloud Engineer investigates the alert using the Azure Workbook Dashboard.
+
+8. Azure Resource Graph and Cost Analysis identify the resources contributing to increased spending.
+
+9. Governance tags identify ownership and accountability.
+
+10. Optimization recommendations are implemented to reduce unnecessary cloud costs.
 
 ---
 
-# Lessons Learned
+# Why These Azure Services Were Selected
 
-During implementation, several real-world cloud engineering challenges were encountered:
+| Service | Why It Was Used |
+|----------|----------|
+| Azure Cost Management | Track and analyze spending |
+| Azure Budget | Detect budget threshold violations |
+| Azure Monitor | Generate alerts |
+| Azure Action Group | Route notifications |
+| Azure Logic Apps | Automate email delivery |
+| Azure Workbooks | Centralized visibility dashboard |
+| Azure Resource Graph | Resource inventory and ownership reporting |
+| Log Analytics Workspace | Monitoring foundation |
 
-- Azure VM quota limitations
-- Region-specific service availability
-- Workbook data source configuration
-- Azure Resource Graph query troubleshooting
-- Cost data reporting delays
+---
 
-Documenting and resolving these issues provided valuable experience in Azure operations, governance, and troubleshooting.
+# Business Outcome
+
+The Azure Cost Visibility Dashboard helps organizations:
+
+- Detect cloud cost overruns earlier
+- Improve ownership and accountability
+- Increase visibility into Azure spending
+- Reduce cloud waste
+- Improve communication between engineering and finance teams
+- Establish repeatable cost investigation procedures
+
+By combining monitoring, alerting, governance, automation, and documentation, the solution provides a practical framework for understanding, controlling, and optimizing Azure cloud spending.
